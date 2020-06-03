@@ -1,6 +1,7 @@
 werkzeug
 flask
 flask-sqlalchemy
+flask-cors
 requests
 sqlalchemy
 webargs
