@@ -76,7 +76,7 @@ def create_event(identifier, title, url, token, config_endpoints):
         - in: path
           schema: IdentifierParameter
       responses:
-        201:
+        205:
           description: Event Created
           content:
             application/json:
