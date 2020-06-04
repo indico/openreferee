@@ -11,21 +11,28 @@ on:
     branches: [ master ]
 
 jobs:
-  validate:
-    runs-on: ubuntu-18.04
+  diff-openapi-spec:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Check out head branch
-        uses: actions/checkout@v2
-        with:
-          path: head
       - name: Check out master branch
         uses: actions/checkout@v2
         with:
           ref: master
-          path: base
-      - name: Run OpenAPI Diff (from HEAD revision)
-        uses: mvegter/openapi-diff-action@v0.2.0
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
         with:
-          head-spec: head/specs/openreferee.yaml
-          base-spec: base/specs/openreferee.yaml
+            python-version: '3.8'
+            architecture: 'x64'
+      - name: Generate OpenAPI spec from the application
+        run: |
+          pip install -e .
+          npm i .
+          cp spec/openreferee.yaml spec/openreferee.old.yaml
+          npm run api-spec
+      - name: Run OpenAPI Diff (from HEAD revision)
+        uses: evereepay/openapi-diff-action@v1.0.0-beta.2
+        with:
+          head-spec: spec/openreferee.yaml
+          base-spec: spec/openreferee.old.yaml
+          github-token: ${{ github.token }}
