@@ -272,11 +272,36 @@ def review_editable(
     current_app.logger.info(
         'A new revision %r was submitted for contribution %r', revision_id, contrib_id
     )
-    if revision['final_state']['name'] == 'accepted':
+    if action == 'accept':
         resp = process_accepted_revision(event, revision)
     else:
         resp = process_revision(event, revision, action)
     return ReviewResponseSchema().dump(resp), 201
+
+
+@api.route("/event/<identifier>/editable/<any(paper,slides,poster):editable_type>/<contrib_id>", methods=("DELETE",))
+@require_event_token
+def remove_editable(event, contrib_id, editable_type):
+    """Remove an editable.
+    ---
+    delete:
+    description: Remove an editable
+    operationId: removeEditable
+    tags: ["editable", "remove"]
+    security:
+        - bearer_token: []
+    parameters:
+        - in: path
+        schema: IdentifierParameter
+    responses:
+        204:
+        description: Editable Removed
+        content:
+            application/json:
+            schema: SuccessSchema
+    """
+    # clean up any data related to the editable
+    return "", 204
 
 
 @api.route(

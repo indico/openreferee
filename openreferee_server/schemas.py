@@ -95,10 +95,8 @@ class EditableSchema(Schema):
 
 class _BaseRevisionSchema(Schema):
     comment = fields.String(required=True)
-    submitter = fields.Nested(EditingUserSchema, required=True)
-    editor = fields.Nested(EditingUserSchema, allow_none=True)
-    initial_state = fields.Nested(RevisionStateSchema)
-    final_state = fields.Nested(RevisionStateSchema)
+    user = fields.Nested(EditingUserSchema, required=True)
+    type = fields.Nested(RevisionStateSchema)
     tags = fields.List(fields.Nested(TagSchema))
 
 
