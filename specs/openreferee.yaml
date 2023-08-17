@@ -177,19 +177,13 @@ components:
       properties:
         comment:
           type: string
-        editor:
-          allOf:
-          - $ref: '#/components/schemas/EditingUser'
-          nullable: true
         files:
           items:
             $ref: '#/components/schemas/SignedFile'
           type: array
-        final_state:
+        type:
           $ref: '#/components/schemas/RevisionState'
-        initial_state:
-          $ref: '#/components/schemas/RevisionState'
-        submitter:
+        user:
           $ref: '#/components/schemas/EditingUser'
         tags:
           items:
@@ -197,7 +191,7 @@ components:
           type: array
       required:
       - comment
-      - submitter
+      - user
       type: object
     RevisionState:
       properties:
@@ -350,19 +344,13 @@ components:
       properties:
         comment:
           type: string
-        editor:
-          allOf:
-          - $ref: '#/components/schemas/EditingUser'
-          nullable: true
         files:
           items:
             $ref: '#/components/schemas/SignedFile'
           type: array
-        final_state:
+        type:
           $ref: '#/components/schemas/RevisionState'
-        initial_state:
-          $ref: '#/components/schemas/RevisionState'
-        submitter:
+        user:
           $ref: '#/components/schemas/EditingUser'
         tags:
           items:
@@ -370,7 +358,7 @@ components:
           type: array
       required:
       - comment
-      - submitter
+      - user
       type: object
     User:
       properties:

@@ -173,7 +173,7 @@ def process_revision(event, revision, action):
 def _can_access_action(revision, action, user):
     if not user['editor']:
         return False
-    if revision['final_state']['name'] == 'accepted':
+    if revision['type']['name'] == 'acceptance':
         if any(t['code'] == 'QA_APPROVED' for t in revision['tags']):
             return action == 'fail-qa'
         else:
